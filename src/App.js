@@ -1,38 +1,32 @@
 import './App.css';
-import React from 'react';
 import useState from 'react';
-import {useAddTask} from '/custom.js'
+import {useAddTask} from './custom.js'
+import * as React from 'react';
+import Button from '@mui/material/Button';
+import Checkbox from '@mui/material/Checkbox';
+import TextField from '@mui/material/TextField';
+
+const label = { inputProps: { '': 'Checkbox demo' } };
 
 function AddToDo(){
-  const {taskList, handleClick} = useAddTask;
-  
+
+  const {handleClick} = useAddTask;
+
   return (
     <div className="addBar"> 
-    <input
-          type="text" 
-          className="addText"
-         // value={name}
-         // onChange={}
-        />
-    <button className="addButton" onClick={}>Add</button>
+    <TextField id="outlined-basic" label="入力" variant="outlined" className="addText"/>
+    <Button variant="contained" onClick={handleClick}>Add</Button>
     </div>
   )
 }
+
 function Task({text,isChecked }){
 
 
   return (
     <li className='task'>
   
-
-    <input
-     // id={}
-      type="checkbox"
-      name="inputNames"
-     checked={isChecked}
-      //onChange={onChange}
-     // value={value}
-    />
+    <Checkbox {...label} checked={isChecked}/>
     <p>{text}</p>
     </li>
    
@@ -41,7 +35,7 @@ function Task({text,isChecked }){
 
 function TaskList(){
 
-  const {taskList, handleClick} = useAddTask;
+  const {taskList} = useAddTask;
 
   return (
     <ul className="">
