@@ -1,25 +1,70 @@
-import logo from './logo.svg';
 import './App.css';
+import React from 'react';
+import useState from 'react';
+import {useAddTask} from '/custom.js'
 
-function App() {
+function AddToDo(){
+  const {taskList, handleClick} = useAddTask;
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="addBar"> 
+    <input
+          type="text" 
+          className="addText"
+         // value={name}
+         // onChange={}
+        />
+    <button className="addButton" onClick={}>Add</button>
     </div>
-  );
+  )
+}
+function Task({text,isChecked }){
+
+
+  return (
+    <li className='task'>
+  
+
+    <input
+     // id={}
+      type="checkbox"
+      name="inputNames"
+     checked={isChecked}
+      //onChange={onChange}
+     // value={value}
+    />
+    <p>{text}</p>
+    </li>
+   
+  )
 }
 
-export default App;
+function TaskList(){
+
+  const {taskList, handleClick} = useAddTask;
+
+  return (
+    <ul className="">
+      
+      {taskList}
+
+    </ul>
+  )
+}
+
+
+
+export default function App(){
+
+
+  return (
+    <div className='App'>
+      <h1>To Do App</h1>
+      <AddToDo />
+      <TaskList/>
+
+    </div>
+
+  )
+
+}
