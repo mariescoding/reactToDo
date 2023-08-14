@@ -24,7 +24,7 @@ function Task({text,isChecked }){
 
 
   return (
-    <li className='taskaa'>
+    <li className='task'>
   
     <Checkbox {...label} checked={isChecked}/>
     <p>{text}</p>
