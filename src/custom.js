@@ -2,10 +2,19 @@ import { useState } from "react";
 
 export const useAddTask = () => {
   const [tasks, setTasks] = useState([]);
+  const [inputText, setInputText] = useState("");
 
-  function handleClick() {
-    setTasks((prevValue) => [...prevValue]);
+  function handleChange(e) {
+    setInputText(e.target.value);
   }
 
-  return { tasks, handleClick };
+  function handleClick() {
+    if (inputText === "") {
+      alert("Field is blank!");
+    } else {
+      setTasks((prevValue) => [...prevValue, inputText]);
+    }
+  }
+
+  return { tasks, handleClick, handleChange, inputText };
 };

@@ -14,7 +14,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 
-function AddToDo({ onClick }) {
+function AddToDo({ onClick, onChange, input }) {
   return (
     <Box m={5}>
       <Container maxWidth="sm">
@@ -25,6 +25,8 @@ function AddToDo({ onClick }) {
               label="入力"
               variant="outlined"
               size="small"
+              value={input}
+              onChange={onChange}
               sx={{ width: 300 }}
             />
           </Grid>
@@ -44,7 +46,6 @@ function AddToDo({ onClick }) {
 function Task({ text, isChecked }) {
   const labelId = `checkbox-list-label-${text}`;
   return (
-
     <>
       <ListItem key={text}>
         <ListItemButton onClick={""} dense>
@@ -62,14 +63,10 @@ function Task({ text, isChecked }) {
       </ListItem>
     </>
   );
-
-  
-
 }
 
 function TaskList({ tasks }) {
   const taskList = tasks.map((task) => {
-    console.log(task);
     return <Task text={task} isChecked={""} />;
   });
 
@@ -83,12 +80,16 @@ function TaskList({ tasks }) {
 }
 
 export default function App() {
-  const { tasks, handleClick } = useAddTask();
+  const { tasks, handleClick, handleChange, inputText } = useAddTask();
 
   return (
     <div className="App">
       <h1>To Do App</h1>
-      <AddToDo onClick={handleClick} />
+      <AddToDo
+        onClick={handleClick}
+        onChange={handleChange}
+        input={inputText}
+      />
       <TaskList tasks={tasks} />
     </div>
   );
