@@ -1,6 +1,6 @@
 import "./App.css";
-import useState from "react";
-import { useAddTask } from "./custom.js";
+import { useState } from "react";
+import { useAddTask } from "./custom.tsx";
 import * as React from "react";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
@@ -14,7 +14,13 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 
-function AddToDo({ onClick, onChange, input }) {
+type AddTodoProps = {
+  onClick: () => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  input: string;
+};
+
+const AddToDo: React.FC<AddTodoProps> = ({ onClick, onChange, input }) => {
   return (
     <Box m={5}>
       <Container maxWidth="sm">
@@ -41,14 +47,22 @@ function AddToDo({ onClick, onChange, input }) {
       </Container>
     </Box>
   );
-}
+};
 
-function Task({ text, isChecked }) {
+type TaskProps = {
+  text: string;
+  id: number;
+  isChecked: boolean;
+  onClick: (id: number) => void;
+};
+
+const Task: React.FC<TaskProps> = ({ text, id, isChecked, onClick }) => {
   const labelId = `checkbox-list-label-${text}`;
+
   return (
     <>
-      <ListItem key={text}>
-        <ListItemButton onClick={""} dense>
+      <ListItem key={id}>
+        <ListItemButton onClick={() => onClick(id)} dense>
           <ListItemIcon>
             <Checkbox
               edge="start"
@@ -58,16 +72,32 @@ function Task({ text, isChecked }) {
               inputProps={{ "aria-labelledby": labelId }}
             />
           </ListItemIcon>
-          <ListItemText sx={{ textAlign: "center" }} id={""} primary={text} />
+          <ListItemText sx={{ textAlign: "center" }} primary={text} />
         </ListItemButton>
       </ListItem>
     </>
   );
-}
+};
 
-function TaskList({ tasks }) {
+type TaskListProps = {
+  tasks: {
+    id: number;
+    name: string;
+    isCompleted: boolean;
+  }[];
+  toggleCheck: (id: number) => void;
+};
+
+const TaskList: React.FC<TaskListProps> = ({ tasks, toggleCheck }) => {
   const taskList = tasks.map((task) => {
-    return <Task text={task} isChecked={""} />;
+    return (
+      <Task
+        text={task.name}
+        isChecked={task.isCompleted}
+        id={task.id}
+        onClick={toggleCheck}
+      />
+    );
   });
 
   return (
@@ -77,10 +107,11 @@ function TaskList({ tasks }) {
       </Container>
     </Box>
   );
-}
+};
 
 export default function App() {
-  const { tasks, handleClick, handleChange, inputText } = useAddTask();
+  const { tasks, handleClick, handleChange, inputText, toggleCheck } =
+    useAddTask();
 
   return (
     <div className="App">
@@ -90,7 +121,7 @@ export default function App() {
         onChange={handleChange}
         input={inputText}
       />
-      <TaskList tasks={tasks} />
+      <TaskList tasks={tasks} toggleCheck={toggleCheck} />
     </div>
   );
 }
