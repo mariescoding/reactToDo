@@ -14,11 +14,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 
-const label = { inputProps: { "": "Checkbox demo" } };
-
-function AddToDo() {
-  const { handleClick } = useAddTask;
-
+function AddToDo({ onClick }) {
   return (
     <Box m={5}>
       <Container maxWidth="sm">
@@ -34,7 +30,7 @@ function AddToDo() {
           </Grid>
           <Grid item md={3}>
             <Box mr={4}>
-              <Button variant="contained" onClick={handleClick}>
+              <Button variant="contained" onClick={onClick}>
                 Add
               </Button>
             </Box>
@@ -60,41 +56,36 @@ function Task({ text, isChecked }) {
               inputProps={{ "aria-labelledby": labelId }}
             />
           </ListItemIcon>
-          <ListItemText
-            sx={{ textAlign: "center" }}
-            id={""}
-            primary={"test" + text}
-          />
+          <ListItemText sx={{ textAlign: "center" }} id={""} primary={text} />
         </ListItemButton>
       </ListItem>
     </>
   );
 }
 
-function TaskList() {
-  const { taskList, tasks } = useAddTask;
-  console.log(taskList, tasks);
+function TaskList({ tasks }) {
+  const taskList = tasks.map((task) => {
+    console.log(task);
+    return <Task text={task} isChecked={""} />;
+  });
 
-  // return <List sx={{ width: "100%", maxWidth: 360 }}>{taskList}</List>;
   return (
     <Box m={4}>
       <Container maxWidth="sm">
-        <List>
-          <Task text="" isChecked={true} />
-          <Task text="" isChecked={false} />
-          <Task text="" isChecked={false} />
-        </List>
+        <List>{taskList}</List>
       </Container>
     </Box>
   );
 }
 
 export default function App() {
+  const { tasks, handleClick } = useAddTask();
+
   return (
     <div className="App">
       <h1>To Do App</h1>
-      <AddToDo />
-      <TaskList />
+      <AddToDo onClick={handleClick} />
+      <TaskList tasks={tasks} />
     </div>
   );
 }
