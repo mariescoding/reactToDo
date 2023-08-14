@@ -1,7 +1,7 @@
 import useState from 'react';
-import Task from 'App.js'
+import Task from './App.js'
 
-function useAddTask({}){
+export function useAddTask({}){
     const[tasks,setTasks] = useState(Array())
 
     function handleClick(){
