@@ -1,30 +1,11 @@
-import useState from 'react';
-import Task from './App.js'
+import { useState } from "react";
 
-export function useAddTask({}){
-    const[tasks,setTasks] = useState(Array())
+export const useAddTask = () => {
+  const [tasks, setTasks] = useState([]);
 
-    function handleClick(){
-        
-        const tasksCopy = tasks.slice()
-        tasks.append()
-        setTasks(tasksCopy)
-    }
- 
-    const taskList = tasks.map((task) => (
-        <Task
-          //id={task.id}
-          text={task}
-          //completed={task.completed}
-        />
-      ));
+  function handleClick() {
+    setTasks((prevValue) => [...prevValue]);
+  }
 
-
-    return {taskList, handleClick}
-}
-
-function useDoneTask(){
-
-
-    return {}
-}
+  return { tasks, handleClick };
+};
