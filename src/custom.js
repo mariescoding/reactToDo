@@ -1,14 +1,11 @@
 import { useState } from "react";
 
 export const useAddTask = () => {
-  const [tasks, setTasks] = useState(Array(3));
+  const [tasks, setTasks] = useState([]);
 
-  // function handleClick() {
-  //   const tasksCopy = tasks.slice();
-  //   tasks.append();
-  //   setTasks(tasksCopy);
-  //   console.log(tasksCopy);
-  // }
+  function handleClick() {
+    setTasks((prevValue) => [...prevValue]);
+  }
 
   return { tasks, handleClick };
 };
