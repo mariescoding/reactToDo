@@ -20,24 +20,29 @@ function AddToDo(){
   const {handleClick} = useAddTask;
 
   return (
-    <Container maxWidth="sm">
-      <Grid container spacing={1}>
-      <Grid item md={8}>
-        <TextField id="outlined-basic" label="入力" variant="outlined" size="small"/>
-      </Grid>
-      <Grid item md={3}>
-        <Box sx={{mr:2}}>
-          <Button variant="contained" onClick={handleClick}>Add</Button>
-
-        </Box>
-        
-      </Grid>
-
-    </Grid>
-    </Container>
-    
-      
-  )
+    <Box m={5}>
+      <Container maxWidth="sm">
+        <Grid container spacing={1}>
+          <Grid item md={8}>
+            <TextField
+              id="outlined-basic"
+              label="入力"
+              variant="outlined"
+              size="small"
+              sx={{ width: 300 }}
+            />
+          </Grid>
+          <Grid item md={3}>
+            <Box mr={4}>
+              <Button variant="contained" onClick={handleClick}>
+                Add
+              </Button>
+            </Box>
+          </Grid>
+        </Grid>
+      </Container>
+    </Box>
+  );
 }
 
 function Task({ text, isChecked }) {
@@ -88,7 +93,6 @@ export default function App() {
   return (
     <div className="App">
       <h1>To Do App</h1>
-      <br></br>
       <AddToDo />
       <TaskList />
     </div>
