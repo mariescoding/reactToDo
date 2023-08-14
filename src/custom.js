@@ -1,30 +1,26 @@
-import useState from 'react';
-import Task from './App.js'
+import useState from "react";
+import Task from "./App.js";
 
-export function useAddTask({}){
-    const[tasks,setTasks] = useState(Array())
+export const useAddTask = () => {
+  const [tasks, setTasks] = useState(Array(3));
 
-    function handleClick(){
-        
-        const tasksCopy = tasks.slice()
-        tasks.append()
-        setTasks(tasksCopy)
-    }
- 
-    const taskList = tasks.map((task) => (
-        <Task
-          //id={task.id}
-          text={task}
-          //completed={task.completed}
-        />
-      ));
+  // function handleClick() {
+  //   const tasksCopy = tasks.slice();
+  //   tasks.append();
+  //   setTasks(tasksCopy);
+  //   console.log(tasksCopy);
+  // }
 
+  const tasksCopy = ["test1", "test2", "test3"];
+  setTasks(tasksCopy);
 
-    return {taskList, handleClick}
-}
+  const taskList = ["test1", "test2", "test3"].map((task) => {
+    return <Task text={task} />;
+  });
 
-function useDoneTask(){
+  return { taskList, tasks };
+};
 
-
-    return {}
-}
+const useDoneTask = () => {
+  return {};
+};

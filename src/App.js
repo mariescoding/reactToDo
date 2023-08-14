@@ -40,46 +40,57 @@ function AddToDo(){
   )
 }
 
-function Task({text,isChecked }){
-
-
+function Task({ text, isChecked }) {
+  const labelId = `checkbox-list-label-${text}`;
   return (
-    <li className='task'>
-  
-    <Checkbox {...label} checked={isChecked}/>
-    <p>{text}</p>
-    </li>
-   
-  )
+    <>
+      <ListItem key={text}>
+        <ListItemButton onClick={""} dense>
+          <ListItemIcon>
+            <Checkbox
+              edge="start"
+              checked={isChecked}
+              tabIndex={-1}
+              disableRipple
+              inputProps={{ "aria-labelledby": labelId }}
+            />
+          </ListItemIcon>
+          <ListItemText
+            sx={{ textAlign: "center" }}
+            id={""}
+            primary={"test" + text}
+          />
+        </ListItemButton>
+      </ListItem>
+    </>
+  );
 }
 
-function TaskList(){
+function TaskList() {
+  const { taskList, tasks } = useAddTask;
+  console.log(taskList, tasks);
 
-  const {taskList} = useAddTask;
-
+  // return <List sx={{ width: "100%", maxWidth: 360 }}>{taskList}</List>;
   return (
-    <ul className="">
-      
-      {taskList}
-
-    </ul>
-  )
+    <Box m={4}>
+      <Container maxWidth="sm">
+        <List>
+          <Task text="" isChecked={true} />
+          <Task text="" isChecked={false} />
+          <Task text="" isChecked={false} />
+        </List>
+      </Container>
+    </Box>
+  );
 }
 
-
-
-export default function App(){
-
-
+export default function App() {
   return (
-    <div className='App'>
+    <div className="App">
       <h1>To Do App</h1>
       <br></br>
       <AddToDo />
-      <TaskList/>
-
+      <TaskList />
     </div>
-
-  )
-
+  );
 }
