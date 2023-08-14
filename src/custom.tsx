@@ -1,12 +1,20 @@
 import { useState } from "react";
 
-export const useAddTask = () => {
-  const [tasks, setTasks] = useState([
-    { id: null, name: null, isCompleted: null },
-  ]);
-  const [inputText, setInputText] = useState("");
+type Task = {
+  id: number;
+  name: string;
+  isCompleted: boolean;
+};
 
-  function handleChange(e) {
+// type inputText: string;
+
+export const useAddTask = () => {
+  const [tasks, setTasks] = useState<Task[]>([
+    { id: 0, name: "", isCompleted: false },
+  ]);
+  const [inputText, setInputText] = useState<string>("");
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setInputText(e.target.value);
   }
 
@@ -21,7 +29,7 @@ export const useAddTask = () => {
     }
   }
 
-  function toggleCheck(id) {
+  function toggleCheck(id: number) {
     setTasks((prevTasks) => {
       return prevTasks.map((task) => {
         if (task.id === id) {

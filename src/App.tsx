@@ -1,6 +1,6 @@
 import "./App.css";
 import { useState } from "react";
-import { useAddTask, useRemoveTask } from "./custom.js";
+import { useAddTask } from "./custom.tsx";
 import * as React from "react";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
@@ -14,7 +14,13 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 
-function AddToDo({ onClick, onChange, input }) {
+type AddTodoProps = {
+  onClick: () => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  input: string;
+};
+
+const AddToDo: React.FC<AddTodoProps> = ({ onClick, onChange, input }) => {
   return (
     <Box m={5}>
       <Container maxWidth="sm">
@@ -41,9 +47,16 @@ function AddToDo({ onClick, onChange, input }) {
       </Container>
     </Box>
   );
-}
+};
 
-function Task({ text, id, isChecked, onClick }) {
+type TaskProps = {
+  text: string;
+  id: number;
+  isChecked: boolean;
+  onClick: (id: number) => void;
+};
+
+const Task: React.FC<TaskProps> = ({ text, id, isChecked, onClick }) => {
   const labelId = `checkbox-list-label-${text}`;
 
   return (
@@ -59,14 +72,23 @@ function Task({ text, id, isChecked, onClick }) {
               inputProps={{ "aria-labelledby": labelId }}
             />
           </ListItemIcon>
-          <ListItemText sx={{ textAlign: "center" }} id={id} primary={text} />
+          <ListItemText sx={{ textAlign: "center" }} primary={text} />
         </ListItemButton>
       </ListItem>
     </>
   );
-}
+};
 
-function TaskList({ tasks, toggleCheck }) {
+type TaskListProps = {
+  tasks: {
+    id: number;
+    name: string;
+    isCompleted: boolean;
+  }[];
+  toggleCheck: (id: number) => void;
+};
+
+const TaskList: React.FC<TaskListProps> = ({ tasks, toggleCheck }) => {
   const taskList = tasks.map((task) => {
     return (
       <Task
@@ -85,7 +107,7 @@ function TaskList({ tasks, toggleCheck }) {
       </Container>
     </Box>
   );
-}
+};
 
 export default function App() {
   const { tasks, handleClick, handleChange, inputText, toggleCheck } =
