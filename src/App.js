@@ -1,6 +1,6 @@
 import "./App.css";
-import useState from "react";
-import { useAddTask } from "./custom.js";
+import { useState } from "react";
+import { useAddTask, useRemoveTask } from "./custom.js";
 import * as React from "react";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
@@ -43,12 +43,13 @@ function AddToDo({ onClick, onChange, input }) {
   );
 }
 
-function Task({ text, isChecked }) {
+function Task({ text, id, isChecked, onClick }) {
   const labelId = `checkbox-list-label-${text}`;
+
   return (
     <>
-      <ListItem key={text}>
-        <ListItemButton onClick={""} dense>
+      <ListItem key={id}>
+        <ListItemButton onClick={() => onClick(id)} dense>
           <ListItemIcon>
             <Checkbox
               edge="start"
@@ -58,16 +59,23 @@ function Task({ text, isChecked }) {
               inputProps={{ "aria-labelledby": labelId }}
             />
           </ListItemIcon>
-          <ListItemText sx={{ textAlign: "center" }} id={""} primary={text} />
+          <ListItemText sx={{ textAlign: "center" }} id={id} primary={text} />
         </ListItemButton>
       </ListItem>
     </>
   );
 }
 
-function TaskList({ tasks }) {
+function TaskList({ tasks, toggleCheck }) {
   const taskList = tasks.map((task) => {
-    return <Task text={task} isChecked={""} />;
+    return (
+      <Task
+        text={task.name}
+        isChecked={task.isCompleted}
+        id={task.id}
+        onClick={toggleCheck}
+      />
+    );
   });
 
   return (
@@ -80,7 +88,8 @@ function TaskList({ tasks }) {
 }
 
 export default function App() {
-  const { tasks, handleClick, handleChange, inputText } = useAddTask();
+  const { tasks, handleClick, handleChange, inputText, toggleCheck } =
+    useAddTask();
 
   return (
     <div className="App">
@@ -90,7 +99,7 @@ export default function App() {
         onChange={handleChange}
         input={inputText}
       />
-      <TaskList tasks={tasks} />
+      <TaskList tasks={tasks} toggleCheck={toggleCheck} />
     </div>
   );
 }
